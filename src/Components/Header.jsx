@@ -1,42 +1,37 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import styled from "styled-components";
-
-const HeaderNav = styled.header`
-    color: #000;
-    background: #fff;
-    padding: 10px 20px;
-
-    ul {
-        display: flex;
-        justify-content: space-between;
-    }
-
-    a {
-        padding: 10px 20px;
-        color: #000;
-    }
-    a:hover {
-        background: #e6e6e6;
-    }
-`;
 
 const Header = () => (
-    <HeaderNav>
-        <nav>
-            <ul>
-                <li>
-                    <Link to="/">Home</Link>
-                </li>
-                <li>
-                    <Link to="/users">Users</Link>
-                </li>
-                <li>
-                    <Link to="/about">About</Link>
-                </li>
-            </ul>
-        </nav>
-    </HeaderNav>
+  <>
+    <nav className="navbar navbar-expand-lg navbar-light bg-light">
+      <div className="container">
+        <a href="#home" className="navbar-brand">
+          Challenge Hotel
+        </a>
+        <button
+          aria-controls="basic-navbar-nav"
+          type="button"
+          aria-label="Toggle navigation"
+          className="navbar-toggler collapsed"
+        >
+          <span className="navbar-toggler-icon"></span>
+        </button>
+        <div
+          className="justify-content-end navbar-collapse collapse"
+          id="basic-navbar-nav"
+        >
+          <div className="me-auto navbar-nav">
+            <Link to="/" className="nav-link">
+              Inicio
+            </Link>
+            <Link to="/about" className="nav-link">
+              Mis Reservaciones
+            </Link>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </>
 );
 
 export default Header;
