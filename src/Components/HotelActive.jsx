@@ -1,12 +1,22 @@
 import React, { useState, useEffect } from "react";
-import AppSpinner from "./AppSpinner";
+import MySpinner from "./MySpinner";
+import FormReservation from "./FormReservation";
 
 const API_HOST = "http://localhost:8000/api/";
 
 const HotelActive = (props) => {
-  const [isLoading, setIsLoading] = useState(true);
   const [rooms, setRooms] = useState(null);
   const [hotelName, setHotelName] = useState("");
+  const [roomType, setRoomType] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [updated, setUpdated] = useState(1);
+
+  const closedModal = (saved=null) => {
+    setRoomType(null);
+    if (saved === true) {
+      setUpdated(updated+1)
+    }
+  };
 
   useEffect(() => {
     setIsLoading(true);
@@ -19,9 +29,11 @@ const HotelActive = (props) => {
           setIsLoading(false);
         }
       });
-  }, [props.hotelId]);
+  }, [props.hotelId, updated]);
 
-  return (isLoading) ? <AppSpinner /> : (
+  return isLoading ? (
+    <MySpinner />
+  ) : (
     rooms && (
       <>
         <div className="card mt-4">
@@ -43,7 +55,7 @@ const HotelActive = (props) => {
                 <button
                   key={i}
                   className={"list-group-item list-group-item-action "}
-                  onClick={() => null}
+                  onClick={() => setRoomType(room.roomType)}
                 >
                   {room.roomType}
                   <span className="badge text-success float-right mt-1">
@@ -54,6 +66,14 @@ const HotelActive = (props) => {
             })}
           </div>
         </div>
+        {roomType && (
+          <FormReservation
+            hotelId={props.hotelId}
+            hotelName={hotelName}
+            roomType={roomType}
+            closed={closedModal}
+          />
+        )}
       </>
     )
   );
